@@ -1,5 +1,5 @@
 const returnErrors = (chunkStr) => {
-  const chunkLineArray = chunkStr.split(/\n/g);
+  const chunkLineArray = chunkStr.split(/\n/g); //split by line breaks
   const errorArray = chunkLineArray.map((chunk, index) => {
     const error = checkChunkLineForCorruption(chunk);
     return error ? `line ${index + 1}, ${error}` : "";
@@ -27,6 +27,16 @@ const checkChunkLineForCorruption = (chunkLineStr) => {
         return `${closingBrackets[lastOpenBracketIndex]} expected found ${currentBracket}`;
       }
     }
+  }
+  if (openBracketsInStr.length !== 0) {
+    const leftOverOpenBrackets = openBracketsInStr;
+    const correspondingClosedBrackets = leftOverOpenBrackets.map(
+      (openBracket) => {
+        return closingBrackets[openBrackets.indexOf(openBracket)];
+      }
+    );
+    //const reversedStr = leftOverOpenBrackets.reverse()
+    return `missing ${correspondingClosedBrackets.reverse().join("")}`;
   }
   return "";
 };
