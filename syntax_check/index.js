@@ -1,13 +1,13 @@
 const returnErrors = (chunkStr) => {
   const chunkLineArray = chunkStr.split(/\n/g); //split by line breaks
   const errorArray = chunkLineArray.map((chunk, index) => {
-    const error = checkChunkLineForCorruption(chunk);
+    const error = checkChunkLineForError(chunk);
     return error ? `line ${index + 1}, ${error}` : "";
   });
   return errorArray.filter((error) => error); //filter where there is no error
 };
 
-const checkChunkLineForCorruption = (chunkLineStr) => {
+const checkChunkLineForError = (chunkLineStr) => {
   const openBrackets = ["{", "[", "(", "<"];
   const closingBrackets = ["}", "]", ")", ">"];
   const chunkStrArr = chunkLineStr.split("");
