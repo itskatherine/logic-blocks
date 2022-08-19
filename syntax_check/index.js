@@ -4,7 +4,7 @@ const returnErrors = (chunkStr) => {
     const error = checkChunkLineForCorruption(chunk);
     return error ? `line ${index + 1}, ${error}` : "";
   });
-  return errorArray.filter((error) => error);
+  return errorArray.filter((error) => error); //filter where there is no error
 };
 
 const checkChunkLineForCorruption = (chunkLineStr) => {

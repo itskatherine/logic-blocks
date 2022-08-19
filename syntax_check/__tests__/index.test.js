@@ -20,4 +20,12 @@ describe("return syntax error", () => {
       "line 2, > expected found )",
     ]);
   });
+  test("given mix of corrupted and uncorrupted chunks returns relevant errors", () => {
+    const input = `([]
+      (]
+      {()()()>
+      <([{}`;
+    expected = ["line 2, ) expected found ]", "line 3, } expected found >"];
+    expect(returnErrors(input)).toEqual(expected);
+  });
 });
