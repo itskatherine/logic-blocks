@@ -8,8 +8,16 @@ describe("return syntax error", () => {
     expect(returnErrors("<{<>}>")).toEqual([]);
   });
   test("given corrupted single string '<{})' returns array with ['line 1, > expected ]", () => {
-    expect(returnErrors("<{})")).toEqual(["line 1, > expected"]);
-    expect(returnErrors("<{}{}}")).toEqual(["line 1, > expected"]);
-    expect(returnErrors("<{}{}<>>(}")).toEqual(["line 1, ) expected"]);
+    expect(returnErrors("<{})")).toEqual(["line 1, > expected found )"]);
+    expect(returnErrors("<{}{}}")).toEqual(["line 1, > expected found }"]);
+    expect(returnErrors("<{}{}<>>(}")).toEqual(["line 1, ) expected found }"]);
+  });
+  test("given multiple lines of corrupted chunks, returns multiple value error msg array", () => {
+    const input = `<{})
+<(()))`;
+    expect(returnErrors(input)).toEqual([
+      "line 1, > expected found )",
+      "line 2, > expected found )",
+    ]);
   });
 });

@@ -1,7 +1,16 @@
 const returnErrors = (chunkStr) => {
+  const chunkLineArray = chunkStr.split(/\n/g);
+  const errorArray = chunkLineArray.map((chunk, index) => {
+    const error = checkChunkLineForCorruption(chunk);
+    return error ? `line ${index + 1}, ${error}` : "";
+  });
+  return errorArray.filter((error) => error);
+};
+
+const checkChunkLineForCorruption = (chunkLineStr) => {
   const openBrackets = ["{", "[", "(", "<"];
   const closingBrackets = ["}", "]", ")", ">"];
-  const chunkStrArr = chunkStr.split("");
+  const chunkStrArr = chunkLineStr.split("");
 
   let openBracketsInStr = [];
 
@@ -15,12 +24,11 @@ const returnErrors = (chunkStr) => {
       if (lastOpenBracketIndex === closingBrackets.indexOf(currentBracket)) {
         openBracketsInStr.pop();
       } else {
-        return [`line 1, ${closingBrackets[lastOpenBracketIndex]} expected`];
+        return `${closingBrackets[lastOpenBracketIndex]} expected found ${currentBracket}`;
       }
     }
   }
-
-  return [];
+  return "";
 };
 
 module.exports = { returnErrors };
