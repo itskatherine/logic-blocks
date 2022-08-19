@@ -35,7 +35,6 @@ const checkChunkLineForCorruption = (chunkLineStr) => {
         return closingBrackets[openBrackets.indexOf(openBracket)];
       }
     );
-    //const reversedStr = leftOverOpenBrackets.reverse()
     return `missing ${correspondingClosedBrackets.reverse().join("")}`;
   }
   return "";
